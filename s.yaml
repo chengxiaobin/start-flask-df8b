@@ -52,7 +52,7 @@ services:
         codeUri: './code'
         runtime: python3
         handler: index.app
-        timeout: 600000
+        timeout: 86400
       triggers:
         - name: httpTrigger
           type: http
