@@ -18,7 +18,7 @@ def process_img(filename):
   hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
   lb = np.array([110,50,50])
   ub = np.array([130,255,255])
-  mask = cv2.imRange(hsv,lb,ub)
+  mask = cv2.inRange(hsv,lb,ub)
   eimg = cv2.bitwise_and(img,img,mask=mask) 
   isp = os.path.join(app.config['UPLOAD_FOLDER'],filename)
   cv2.imwrite(isp,eimg,[int(cv2.IMWRITE_JPEG_QUALITY),100])
@@ -40,11 +40,11 @@ def upload_file():
 def uploader():
 	if request.method == 'POST':
 		if 'file' not in request.files:
-			flash('no file part')
+			print('no file part')
 			return render_template('upload.html')
 		f = request.files['file']
 		if f.filename == '':
-			flash('no selected file')
+			print('no selected file')
 			return render_template('upload.html')
 		if f and allowed_file(f.filename):
 			filename = secure_filename(f.filename)
